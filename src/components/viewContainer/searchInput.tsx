@@ -11,7 +11,7 @@ interface State {
     redirect: boolean
 }
 
-export default class SearchInput extends Component<Props> {
+export default class SearchInput extends Component<Props, State> {
     state: State = {
         searchString: '',
         searchItem: '',
@@ -26,9 +26,9 @@ export default class SearchInput extends Component<Props> {
     };
 
     onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({ searchString: event.target.value})
+        this.setState({ searchString: e.target.value})
 
-        this.setState({ searchItem: event.target.value})
+        this.setState({ searchItem: e.target.value})
     }
    
     render() {
