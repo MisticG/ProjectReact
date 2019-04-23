@@ -1,23 +1,23 @@
 import React, { CSSProperties } from 'react';
 import ViewSection from './viewSection';
 import ImageLink from './imageLink';
+import SearchInput from './searchInput';
 
 interface Props {
     detailViews: string[]
+    searchItem: (title: string) => void;
 }
 
 /** React function component */
-export default function MasterView(props: Props) {
+export default class MasterView extends Component<Props>) {
 
+    render() {
     return (
         <div style={container}>
-            {props.detailViews.map((view) => (
-                <ViewSection key={view}>
-                    <ImageLink view={view}/>
-                </ViewSection>
-            ))}
+            <SearchInput searchItem = {this.props.searchItem} />
         </div>
     );
+}
 }
 
 const container: CSSProperties = {
