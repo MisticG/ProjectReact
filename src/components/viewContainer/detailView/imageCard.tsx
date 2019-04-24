@@ -17,6 +17,7 @@ interface Props {
     //ikendislike: string;
     isLiked: boolean
 }
+
 interface State {
     isHover: boolean
     isModalOpen: boolean
@@ -26,8 +27,8 @@ export default class ImageCard extends Component<Props> {
 
     state: State = {
         isHover: false,
-        isModalOpen: false
-    }
+        isModalOpen: false,
+    };
 
     style(theme: ThemeState): CSSProperties {
         const hover: CSSProperties = this.state.isHover ? {
@@ -44,6 +45,8 @@ export default class ImageCard extends Component<Props> {
     onMouseLeave = () => this.setState({ isHover: false })
     openModal = () => this.setState({ isModalOpen: true });
     closeModal = () => this.setState({ isModalOpen: false });
+    
+
 
     render() {
         const { urls } = this.props
@@ -52,7 +55,10 @@ export default class ImageCard extends Component<Props> {
                 <ThemeContext.Consumer>
                     {({ theme }) => (
                         <div>
-                            <img onClick={() => this.props.likePicture(urls)} style={heart} /*src={this.props.likendislike}*/ />
+                            <img onClick={() => this.props.likePicture(urls)} 
+                            style={heart} src={'../../../assets/' + 
+                            (this.props.isLiked ? 'like' : 'dislike') + '.png'} 
+                            />
                             <div
                             style={this.style(theme)}
                             onMouseEnter={this.onMouseEnter}
