@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import Axios, { AxiosResponse } from 'axios';
 import ImageCard, { ImageUrls } from './imageCard';
 import { ThemedCSSProperties, ThemeContext } from '../../../contexts/themeContext';
+import Heart from './heart';
 
 interface Props {
     view: string
 }
+
 interface State {
     imagesUrls: ImageUrls[],
-    isLoading: boolean
+    isLoading: boolean,
+    savedImages: ImageUrls[],
+    isLiked: boolean
 }
 
 export default class ImageSection extends Component<Props, State> {
@@ -18,8 +22,11 @@ export default class ImageSection extends Component<Props, State> {
 
     state: State = {
         imagesUrls: new Array(24).fill({}),
-        isLoading: true
+        isLoading: true,
+        savedImages: [],
+        isLiked: false
     }
+  
 
     handleResponse(response: AxiosResponse) {
         if (response.data && response.data.results) {
@@ -44,13 +51,38 @@ export default class ImageSection extends Component<Props, State> {
         }
     }
 
+    private get setMyLocalStorage() {
+        if(localStorage.mySavedImages) {
+            console.log(localStorage.mySavedImages)
+            return 
+        } else {
+            localStorage.setItem("mySavedImages", JSON.stringify(this.state.savedImages))
+        }
+    }
+
+    componentDidUpdate() {
+        this.setMyLocalStorage;
+    }
+
+    likePicture = (url: ImageUrls) => {///(url: {full: string, raw: string, regular: string, small: string, thumb: string}) => {
+        if(this.state.isLiked = true) {
+            this.setState({savedImages: [...this.state.savedImages, url]})
+        } else {
+           
+        }
+        // TODO: Move imageObject from this.state.imageUrls to this.state.savedImages*/
+    }
+
     render() {
         return (
             <ThemeContext.Consumer>
                 {({ theme }) => (
                     <div style={root(theme)}>
+                        {this.state.savedImages.map((urls, index) =>
+                            <ImageCard key={index} urls={urls} likePicture={this.likePicture} isLiked={true}/>  
+                        )}
                         {this.state.imagesUrls.map((urls, index) =>
-                            <ImageCard key={index} urls={urls} />
+                            <ImageCard key={index} urls={urls} likePicture={this.likePicture}  isLiked={false}/>  
                         )}
                     </div>
                 )}

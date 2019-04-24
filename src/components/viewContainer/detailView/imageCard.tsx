@@ -13,6 +13,9 @@ export interface ImageUrls {
 
 interface Props {
     urls: ImageUrls
+    likePicture: (url: ImageUrls) => void,//(url: {full: string, raw: string, regular: string, small: string, thumb: string}) => void;
+    //ikendislike: string;
+    isLiked: boolean
 }
 interface State {
     isHover: boolean
@@ -48,14 +51,20 @@ export default class ImageCard extends Component<Props> {
             <Fragment>
                 <ThemeContext.Consumer>
                     {({ theme }) => (
-                        <div
+                        <div>
+                            <img onClick={() => this.props.likePicture(urls)} style={heart} /*src={this.props.likendislike}*/ />
+                            <div
                             style={this.style(theme)}
                             onMouseEnter={this.onMouseEnter}
                             onMouseLeave={this.onMouseLeave}
                             onClick={this.openModal}
+                        
                         >
                             {urls.small ? <img src={urls.small} style={card}/> : <Spinner/>}
                         </div>
+                           
+                        </div>
+                        
                     )}
                 </ThemeContext.Consumer>
                 {
@@ -88,4 +97,8 @@ const preview: CSSProperties = {
     width: '100%',
     height: '100%',
     objectFit: 'contain'
+}
+
+const heart: CSSProperties = {
+    width: '4em'
 }
