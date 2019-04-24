@@ -1,55 +1,49 @@
 import React, { Component, CSSProperties, ChangeEvent, FormEvent } from 'react';
 import { Redirect } from 'react-router-dom';
 
-interface Props {
-    searchItem: (title: string) => void;
-}
+interface Props {}
 
 interface State {
     searchString: string
-    searchItem: string
+    //searchItem: string
     redirect: boolean
 }
 
 export default class SearchInput extends Component<Props, State> {
     state: State = {
         searchString: '',
-        searchItem: '',
+        //searchItem: '',
         redirect: false
     }
 
     onSubmit = (e: FormEvent) => {
         e.preventDefault();
-        this.setState({ redirect: true})
-        this.props.searchItem(this.state.searchString);
-        this.setState({ searchString: '' });
+        this.setState({ redirect: true })
     };
 
     onChange = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({ searchString: e.target.value})
-
-        this.setState({ searchItem: e.target.value})
     }
    
     render() {
 
         if (this.state.redirect) {
-            return <Redirect to={`${this.state.searchItem}`} />
+            return <Redirect push to={`${this.state.searchString}`} />
         }
         return (
             <div>
             <form onSubmit={this.onSubmit} style={searchBar}>
                 <input 
-                type="text"
-                name="title"
-                placeholder="Sök..."
-                value={this.state.searchString}
-                onChange={this.onChange}
+                    type="text"
+                    name="title"
+                    placeholder="Sök..."
+                    value={this.state.searchString}
+                    onChange={this.onChange}
                 />
                 <input
-                type="submit"
-                value="Search"
-                className="btn"
+                    type="submit"
+                    value="Search"
+                    className="btn"
                 />
             </form>
             </div>

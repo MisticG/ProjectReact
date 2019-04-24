@@ -12,29 +12,15 @@ interface State {
 
 /** React function component */
 export default class ViewContainer extends Component<{}, State> {
-
-    //let item = '';
-    
-    state: State = {
-        detailViews: ['forest', 'sky', 'desert'],
-        searchString: ''
-    }
-
-    searchItem = (title: string) => {
-        this.setState({searchString: "/" + title})
-    }
     
     render() {
         return (
             <Suspense fallback={<Spinner/>}>
                 <Switch>
                     <Route exact path="/" render={() =>
-                        <MasterView detailViews={this.state.detailViews}
-                        searchItem = {this.searchItem}/>
+                        <MasterView/>
                     }/>
-                        <Route path={`${this.state.searchString}`} component={DetailView}/>
-                        <Route path="/sky" component={DetailView}/>
-                        {/*<Route path="/desert" component={DetailView}/>^*/}
+                        <Route path="/*" component={DetailView}/>
                 </Switch>
             </Suspense>
         );

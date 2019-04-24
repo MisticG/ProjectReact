@@ -3,10 +3,7 @@ import ViewSection from './viewSection';
 import ImageLink from './imageLink';
 import SearchInput from './searchInput';
 
-interface Props {
-    detailViews: string[]
-    searchItem: (title: string) => void;
-}
+interface Props {}
 
 /** React function component */
 export default class MasterView extends Component<Props> {
@@ -14,7 +11,7 @@ export default class MasterView extends Component<Props> {
     render() {
     return (
         <div style={container}>
-            <SearchInput searchItem = {this.props.searchItem} />
+            <SearchInput />
         </div>
     );
 }
