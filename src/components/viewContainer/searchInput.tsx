@@ -5,14 +5,12 @@ interface Props {}
 
 interface State {
     searchString: string
-    //searchItem: string
     redirect: boolean
 }
 
 export default class SearchInput extends Component<Props, State> {
     state: State = {
         searchString: '',
-        //searchItem: '',
         redirect: false
     }
 
