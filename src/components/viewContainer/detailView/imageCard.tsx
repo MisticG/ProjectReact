@@ -13,9 +13,10 @@ export interface ImageUrls {
 
 interface Props {
     urls: ImageUrls
-    likePicture: (url: ImageUrls) => void,//(url: {full: string, raw: string, regular: string, small: string, thumb: string}) => void;
+    likePicture: (url: ImageUrls, index: number) => void,//(url: {full: string, raw: string, regular: string, small: string, thumb: string}) => void;
     //ikendislike: string;
     isLiked: boolean
+    index: number
 }
 
 interface State {
@@ -45,8 +46,6 @@ export default class ImageCard extends Component<Props> {
     onMouseLeave = () => this.setState({ isHover: false })
     openModal = () => this.setState({ isModalOpen: true });
     closeModal = () => this.setState({ isModalOpen: false });
-    
-
 
     render() {
         const { urls } = this.props
@@ -55,16 +54,16 @@ export default class ImageCard extends Component<Props> {
                 <ThemeContext.Consumer>
                     {({ theme }) => (
                         <div>
-                            <img onClick={() => this.props.likePicture(urls)} 
+                            <img onClick={() => this.props.likePicture(urls, this.props.index)} 
                             style={heart} src={'../../../assets/' + 
                             (this.props.isLiked ? 'like' : 'dislike') + '.png'} 
+    
                             />
                             <div
                             style={this.style(theme)}
                             onMouseEnter={this.onMouseEnter}
                             onMouseLeave={this.onMouseLeave}
                             onClick={this.openModal}
-                        
                         >
                             {urls.small ? <img src={urls.small} style={card}/> : <Spinner/>}
                         </div>

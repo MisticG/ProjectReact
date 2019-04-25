@@ -50,21 +50,29 @@ export default class ImageSection extends Component<Props, State> {
     }
 
     private get setMyLocalStorage() {
-        if(localStorage.mySavedImages) {
+
+        /*if(localStorage.mySavedImages) {
             console.log(localStorage.mySavedImages)
             return 
-        } else {
-            localStorage.setItem("mySavedImages", JSON.stringify(this.state.savedImages))
-        }
+        } else {*/
+            return localStorage.setItem(this.props.view, JSON.stringify(this.state.savedImages))
+        //}
     }
 
     componentDidUpdate() {
         this.setMyLocalStorage;
     }
 
-    likePicture = (url: ImageUrls) => {///(url: {full: string, raw: string, regular: string, small: string, thumb: string}) => {
+    likePicture = (url: ImageUrls, index: number) => {
         this.setState({
-            savedImages: [...this.state.savedImages, url]})
+            savedImages: [...this.state.savedImages, url]
+        })
+
+        this.setState({
+            imagesUrls: this.state.imagesUrls.filter((_, i) => i !== index)
+        })
+        
+        this.setMyLocalStorage;
         // TODO: Move imageObject from this.state.imageUrls to this.state.savedImages*/
     }
 
@@ -74,10 +82,22 @@ export default class ImageSection extends Component<Props, State> {
                 {({ theme }) => (
                     <div style={root(theme)}>
                         {this.state.savedImages.map((urls, index) =>
-                            <ImageCard key={index} urls={urls} likePicture={this.likePicture} isLiked={true} />  
+                            <ImageCard 
+                            key={index} 
+                            urls={urls} 
+                            likePicture={this.likePicture} 
+                            isLiked={true} 
+                            index = {index}
+                            />  
                         )}
                         {this.state.imagesUrls.map((urls, index) =>
-                            <ImageCard key={index} urls={urls} likePicture={this.likePicture}  isLiked={false} />  
+                            <ImageCard 
+                            key={index} 
+                            urls={urls} 
+                            likePicture={this.likePicture} 
+                            isLiked={false} 
+                            index = {index}
+                            />  
                         )}
                     </div>
                 )}
