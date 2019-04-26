@@ -50,29 +50,28 @@ export default class ImageSection extends Component<Props, State> {
     }
 
     private get setMyLocalStorage() {
-
-        /*if(localStorage.mySavedImages) {
-            console.log(localStorage.mySavedImages)
-            return 
-        } else {*/
-            return localStorage.setItem(this.props.view, JSON.stringify(this.state.savedImages))
-        //}
+        
+        localStorage.setItem(this.props.view, JSON.stringify(this.state.savedImages))
+        return
     }
 
     componentDidUpdate() {
-        this.setMyLocalStorage;
+        if(this.props.view in localStorage && this.state.savedImages.length === 0) {
+            //Todo: Vill läsa från localstorage o lägga i saved images
+          
+        } else {
+        this.setMyLocalStorage; 
+        }
     }
 
     likePicture = (url: ImageUrls, index: number) => {
         this.setState({
             savedImages: [...this.state.savedImages, url]
         })
-
         this.setState({
             imagesUrls: this.state.imagesUrls.filter((_, i) => i !== index)
         })
         
-        this.setMyLocalStorage;
         // TODO: Move imageObject from this.state.imageUrls to this.state.savedImages*/
     }
 

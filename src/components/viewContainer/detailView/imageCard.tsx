@@ -57,17 +57,15 @@ export default class ImageCard extends Component<Props> {
                             <img onClick={() => this.props.likePicture(urls, this.props.index)} 
                             style={heart} src={'../../../assets/' + 
                             (this.props.isLiked ? 'like' : 'dislike') + '.png'} 
-    
                             />
                             <div
                             style={this.style(theme)}
                             onMouseEnter={this.onMouseEnter}
                             onMouseLeave={this.onMouseLeave}
                             onClick={this.openModal}
-                        >
+                            >
                             {urls.small ? <img src={urls.small} style={card}/> : <Spinner/>}
-                        </div>
-                           
+                        </div>   
                         </div>
                         
                     )}
