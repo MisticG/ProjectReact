@@ -25,7 +25,7 @@ export default class DetailView extends Component<Props, State> {
     }
 
     get imageSrc() {
-        return `../assets/${this.view}.jpg`;
+       return `../assets/forestwolf.jpg`;
     }
 
     openModal = () => this.setState({ isModalOpen: true });

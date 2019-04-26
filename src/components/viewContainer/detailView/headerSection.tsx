@@ -10,15 +10,11 @@ interface Props {
 export default function HeaderSection(props: Props) {
 
     const color: CSSProperties = {
-        color: selectColor(props.view)
+        color: selectColor()
     }
 
-    function selectColor(view: string) {
-        switch(view) {
-            case 'forest': return '#63b323'
-            case 'sky': return '#5fb2f6'
-            case 'desert': return '#e7a11f'
-        }
+    function selectColor() {
+        return 'green'
     }
     
     return (
