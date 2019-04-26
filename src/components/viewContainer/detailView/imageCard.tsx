@@ -13,10 +13,10 @@ export interface ImageUrls {
 
 interface Props {
     urls: ImageUrls
-    likePicture: (url: ImageUrls, index: number) => void,//(url: {full: string, raw: string, regular: string, small: string, thumb: string}) => void;
-    //ikendislike: string;
+    likePicture: (url: ImageUrls, index: number) => void
     isLiked: boolean
     index: number
+   
 }
 
 interface State {
@@ -55,8 +55,8 @@ export default class ImageCard extends Component<Props> {
                     {({ theme }) => (
                         <div>
                             <img onClick={() => this.props.likePicture(urls, this.props.index)} 
-                            style={heart} src={'../../../assets/' + 
-                            (this.props.isLiked ? 'like' : 'dislike') + '.png'} 
+                            style={heart} src={'../../../assets/' +
+                            (this.props.isLiked ? 'liked' : 'disliked') + '.png'} 
                             />
                             <div
                             style={this.style(theme)}
@@ -103,5 +103,8 @@ const preview: CSSProperties = {
 }
 
 const heart: CSSProperties = {
-    width: '4em'
+    position: 'absolute',
+    width: '3em',
+    marginTop: '1em',
+    marginLeft: '1em',
 }

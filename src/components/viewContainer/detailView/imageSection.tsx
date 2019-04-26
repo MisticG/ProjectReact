@@ -49,31 +49,50 @@ export default class ImageSection extends Component<Props, State> {
         }
     }
 
-    private get setMyLocalStorage() {
-        
+    setMyLocalStorage() {
+        //skapa en localStoage med nyckel = view och en tom array som värde
         localStorage.setItem(this.props.view, JSON.stringify(this.state.savedImages))
-        return
+        
     }
 
-    componentDidUpdate() {
-        if(this.props.view in localStorage && this.state.savedImages.length === 0) {
-            //Todo: Vill läsa från localstorage o lägga i saved images
-          
-        } else {
-        this.setMyLocalStorage; 
+    storageToSavedImages() {
+        //läser in bilder från localStorage till en variabel
+        const storageData: ImageUrls[] = JSON.parse(localStorage.getItem(this.props.view) || "{}")
+
+        //lägg in alla lagrade bilder i savedImages. Måste göra en koll först så att storageData inte är tom
+        if(storageData.length > 0) {
+            this.setState ({
+                savedImages: this.state.savedImages = [...storageData]
+            });
         }
     }
 
+    componentDidUpdate() {
+        //Om det finns sparade bilder i localStorage och savedImages är tom...
+        if(this.props.view in localStorage && this.state.savedImages.length === 0) {
+          
+            //kör...
+            this.storageToSavedImages();
+
+        } else {
+            //kör...
+            this.setMyLocalStorage(); 
+        }
+    }
+
+    //Tar emot url:erna till en bild...
     likePicture = (url: ImageUrls, index: number) => {
+        //Sparar den gillade bildens url i savedImages-arrayen
         this.setState({
             savedImages: [...this.state.savedImages, url]
-        })
+        });
+        //och tar bort bilden ur imageUrls-arrayen
         this.setState({
             imagesUrls: this.state.imagesUrls.filter((_, i) => i !== index)
-        })
-        
-        // TODO: Move imageObject from this.state.imageUrls to this.state.savedImages*/
+        });
     }
+
+
 
     render() { 
         return (
@@ -82,20 +101,20 @@ export default class ImageSection extends Component<Props, State> {
                     <div style={root(theme)}>
                         {this.state.savedImages.map((urls, index) =>
                             <ImageCard 
-                            key={index} 
-                            urls={urls} 
-                            likePicture={this.likePicture} 
-                            isLiked={true} 
-                            index = {index}
+                                key={index} 
+                                urls={urls} 
+                                likePicture={this.likePicture} 
+                                isLiked={true} 
+                                index = {index}
                             />  
                         )}
-                        {this.state.imagesUrls.map((urls, index) =>
+                        {this.state.imagesUrls.map((urls, index, e) =>
                             <ImageCard 
-                            key={index} 
-                            urls={urls} 
-                            likePicture={this.likePicture} 
-                            isLiked={false} 
-                            index = {index}
+                                key={index} 
+                                urls={urls} 
+                                likePicture={this.likePicture} 
+                                isLiked={false} 
+                                index = {index} 
                             />  
                         )}
                     </div>
